@@ -1,5 +1,6 @@
  body {
       font-family: Arial, sans-serif;
+        background-color: rgb(243, 238, 238) !important;
     }
     /* Sidebar */
     .sidebar {
@@ -31,8 +32,8 @@
     /* Navbar */
     .navbar-custom {
       background-color: white;
-      /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); */
-      position: fixed;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: fixed !important;
       width: calc(100% - 220px);
       left: 220px;
       top: 0;

@@ -1,11 +1,418 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css">
+  <title>Exemple Utilisateurs - Onglets Cartes</title>
+
+  <!-- Bootstrap 5 CSS (CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+
 </head>
-<body>
+<style>
     
+    /* Styles des cartes résumé */
+    .summary-card {
+      font: Montserrat;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 20px;
+      transition: transform .12s ease, box-shadow .12s ease;
+       min-height: 180px; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      position: relative;
+       padding: 50px; 
+      background: #f7f7f7;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .summary-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    }
+
+    /* Etat actif (vert) */
+    .summary-card.active {
+      background: linear-gradient(180deg, #00c853, #00c853);
+      border-color: #20DF7F;
+      color: #fff;
+      box-shadow: 0 8px 26px rgba(0,176,80,0.12);
+    }
+    
+
+
+    /*  */
+
+    .table thead th {
+  background-color: #00c853; /* vert */
+  color: #101010;              /* texte blanc pour contraste */
+}
+
+
+    /* petit indicateur "bouton" qui se déplace sur la carte active */
+    .active-indicator {
+      position: absolute;
+      height: 10px;
+      width: 10px;
+      border-radius: 50%;
+      background: #00b050;
+      right: 14px;
+      top: 14px;
+      opacity: 0;
+      transform: scale(.8);
+      transition: all .18s ease;
+    }
+    .summary-card.active .active-indicator {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* zone contenu */
+    .content-panel { margin-top: 20px; }
+
+    /* petite barre de progression simple */
+    .progress-mini {
+      height: 8px;
+      background: #e9ecef;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .progress-mini > .bar {
+      height: 100%;
+      background: #00b050;
+    }
+</style>
+<body class="bg-light">
+
+  <div class="container py-4">
+    <header class="d-flex justify-content-between align-items-center mb-3">
+      <h4>Utilisateurs</h4>
+    </header>
+
+    <!-- Row des cartes récap -->
+    <div class="row g-3">
+      <div class="col-12 col-md-4">
+        <div class="summary-card p-3" data-target="actifs" id="card-actifs" role="button" tabindex="0">
+          <div class="active-indicator" aria-hidden="true"></div>
+          <small>Membres Actifs</small>
+          <strong class="fs-4">94 Membres</strong>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <div class="summary-card p-3" data-target="bloques" id="card-bloques" role="button" tabindex="0">
+          <div class="active-indicator" aria-hidden="true"></div>
+          <small>Membres Bloqués</small>
+          <strong class="fs-4">6 Membres</strong>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <div class="summary-card p-3" data-target="total" id="card-total" role="button" tabindex="0">
+          <div class="active-indicator" aria-hidden="true"></div>
+          <small>Total Effectif</small>
+          <strong class="fs-4">100 Membres</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contenu des panneaux (un seul visible) -->
+<div class="content-panel">
+  <div class="card p-3" id="panel-actifs" data-panel="actifs">
+    <h5>Liste — Membres Actifs</h5>
+    <table class="table table-sm mt-2 align-middle">
+      <thead>
+        <tr>
+          <th>Membre</th>
+          <th>Date début</th>
+          <th>Seuil</th>
+          <th class="pe-3">Progression</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Ligne 1 -->
+        <tr>
+          <td>Selena Roy</td>
+          <td>01/01/2022</td>
+          <td>300.000 FCFA</td>
+          <td style="min-width:200px;" class="pe-3">
+            <div class="d-flex align-items-center">
+              <div class="progress flex-grow-1" style="height: 8px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 100%"></div>
+              </div>
+              <span class="ms-2">100%</span>
+            </div>
+          </td>
+          <td><span class="badge bg-success">Actif</span></td>
+          <td>
+            <button class="btn btn-info btn-sm" title="Voir"><i class="bi bi-eye"></i></button>
+            <button class="btn btn-primary btn-sm" title="Modifier"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-warning btn-sm" title="Bloquer"><i class="bi bi-slash-circle"></i></button>
+          </td>
+        </tr>
+
+        <!-- ligne 4 -->
+
+         <tr>
+          <td>Selena Roy</td>
+          <td>01/01/2022</td>
+          <td>300.000 FCFA</td>
+          <td style="min-width:200px;" class="pe-3">
+            <div class="d-flex align-items-center">
+              <div class="progress flex-grow-1" style="height: 8px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 65%"></div>
+              </div>
+              <span class="ms-2">65%</span>
+            </div>
+          </td>
+          <td><span class="badge bg-success">Actif</span></td>
+          <td>
+            <button class="btn btn-info btn-sm" title="Voir"><i class="bi bi-eye"></i></button>
+            <button class="btn btn-primary btn-sm" title="Modifier"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-warning btn-sm" title="Bloquer"><i class="bi bi-slash-circle"></i></button>
+          </td>
+        </tr>
+
+        <!-- ligne 5 -->
+
+         <tr>
+          <td>Selena Roy</td>
+          <td>01/01/2022</td>
+          <td>300.000 FCFA</td>
+          <td style="min-width:200px;" class="pe-3">
+            <div class="d-flex align-items-center">
+              <div class="progress flex-grow-1" style="height: 8px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 75%"></div>
+              </div>
+              <span class="ms-2">75%</span>
+            </div>
+          </td>
+          <td><span class="badge bg-success">Actif</span></td>
+          <td>
+            <button class="btn btn-info btn-sm" title="Voir"><i class="bi bi-eye"></i></button>
+            <button class="btn btn-primary btn-sm" title="Modifier"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-warning btn-sm" title="Bloquer"><i class="bi bi-slash-circle"></i></button>
+          </td>
+        </tr>
+
+        <!-- ligne 6 -->
+
+         <tr>
+          <td>Selena Roy</td>
+          <td>01/01/2022</td>
+          <td>300.000 FCFA</td>
+          <td style="min-width:200px;" class="pe-3">
+            <div class="d-flex align-items-center">
+              <div class="progress flex-grow-1" style="height: 8px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 50%"></div>
+              </div>
+               <span class="ms-2">50%</span>
+            </div>
+          </td>
+          <td><span class="badge bg-success">Actif</span></td>
+          <td>
+            <button class="btn btn-info btn-sm" title="Voir"><i class="bi bi-eye"></i></button>
+            <button class="btn btn-primary btn-sm" title="Modifier"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-warning btn-sm" title="Bloquer"><i class="bi bi-slash-circle"></i></button>
+          </td>
+        </tr>
+
+        <!-- ligne 7 -->
+
+         <tr>
+          <td>Selena Roy</td>
+          <td>01/01/2022</td>
+          <td>300.000 FCFA</td>
+          <td style="min-width:200px;" class="pe-3">
+            <div class="d-flex align-items-center">
+              <div class="progress flex-grow-1" style="height: 8px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 100%"></div>
+              </div>
+              <span class="ms-2">100%</span>
+            </div>
+          </td>
+          <td><span class="badge bg-success">Actif</span></td>
+          <td>
+            <button class="btn btn-info btn-sm" title="Voir"><i class="bi bi-eye"></i></button>
+            <button class="btn btn-primary btn-sm" title="Modifier"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-warning btn-sm" title="Bloquer"><i class="bi bi-slash-circle"></i></button>
+          </td>
+        </tr>
+
+        <!-- Ligne 2 -->
+        <tr>
+          <td>Jhon Robert</td>
+          <td>01/01/2022</td>
+          <td>300.000 FCFA</td>
+          <td style="min-width:200px;" class="pe-3">
+            <div class="d-flex align-items-center">
+              <div class="progress flex-grow-1" style="height: 8px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 75%"></div>
+              </div>
+              <span class="ms-2">75%</span>
+            </div>
+          </td>
+          <td><span class="badge bg-success">Actif</span></td>
+          <td>
+            <button class="btn btn-info btn-sm" title="Voir"><i class="bi bi-eye"></i></button>
+            <button class="btn btn-primary btn-sm" title="Modifier"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-warning btn-sm" title="Bloquer"><i class="bi bi-slash-circle"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+     <div class="card p-3 d-none" id="panel-bloques" data-panel="bloques">
+  <h5>Liste — Membres Bloqués</h5>
+  <table class="table table-sm mt-2 align-middle">
+    <thead>
+      <tr>
+        <th>Membre</th>
+        <th>Date début</th>
+        <th>Seuil</th>
+        <th>Statut</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Emma Watson</td>
+        <td>01/01/2022</td>
+        <td>300.000 FCFA</td>
+        <td><span class="badge bg-danger">Bloqué</span></td>
+        <td>
+          <button class="btn btn-info btn-sm" title="Voir"><i class="bi bi-eye"></i></button>
+          <button class="btn btn-success btn-sm" title="Débloquer"><i class="bi bi-unlock"></i></button>
+        </td>
+      </tr>
+      <tr>
+        <td>Emma Stone</td>
+        <td>01/01/2022</td>
+        <td>300.000 FCFA</td>
+        <td><span class="badge bg-danger">Bloqué</span></td>
+        <td>
+          <button class="btn btn-info btn-sm" title="Voir"><i class="bi bi-eye"></i></button>
+          <button class="btn btn-success btn-sm" title="Débloquer"><i class="bi bi-unlock"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+      <div class="card p-3 d-none" id="panel-total" data-panel="total">
+        <h5>Total Effectif</h5>
+         <table class="table table-sm mt-2 align-middle">
+      <thead>
+        <tr>
+          <th>Membre</th>
+          <th>Date début</th>
+          <th>Seuil</th>
+          <th class="pe-3">Progression</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Ligne 1 -->
+        <tr>
+          <td>Selena Roy</td>
+          <td>01/01/2022</td>
+          <td>300.000 FCFA</td>
+          <td style="min-width:200px;" class="pe-3">
+            <div class="d-flex align-items-center">
+              <div class="progress flex-grow-1" style="height: 8px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 100%"></div>
+              </div>
+              <span class="ms-2">100%</span>
+            </div>
+          </td>
+          <td><span class="badge bg-success">Actif</span></td>
+          <td>
+            <button class="btn btn-info btn-sm" title="Voir"><i class="bi bi-eye"></i></button>
+            <button class="btn btn-primary btn-sm" title="Modifier"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-warning btn-sm" title="Bloquer"><i class="bi bi-slash-circle"></i></button>
+          </td>
+        </tr>
+        <!-- Ligne 2 -->
+        <tr>
+          <td>Jhon Robert</td>
+          <td>01/01/2022</td>
+          <td>300.000 FCFA</td>
+          <td style="min-width:200px;" class="pe-3">
+            <div class="d-flex align-items-center">
+              <div class="progress flex-grow-1" style="height: 8px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 75%"></div>
+              </div>
+              <span class="ms-2">75%</span>
+            </div>
+          </td>
+          <td><span class="badge bg-success">Actif</span></td>
+          <td>
+            <button class="btn btn-info btn-sm" title="Voir"><i class="bi bi-eye"></i></button>
+            <button class="btn btn-primary btn-sm" title="Modifier"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-warning btn-sm" title="Bloquer"><i class="bi bi-slash-circle"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 Bundle JS (popper + bootstrap) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // JavaScript : gestion des états "actif" et affichage du panneau
+    (function () {
+      const cards = document.querySelectorAll('.summary-card');
+      const panels = document.querySelectorAll('[data-panel]');
+
+      function setActive(targetKey) {
+        // activer la carte
+        cards.forEach(c => {
+          if (c.dataset.target === targetKey) c.classList.add('active');
+          else c.classList.remove('active');
+        });
+
+        // afficher le panneau correspondant
+        panels.forEach(p => {
+          if (p.dataset.panel === targetKey) p.classList.remove('d-none');
+          else p.classList.add('d-none');
+        });
+      }
+
+      // initial : afficher "actifs"
+      setActive('actifs');
+
+      // clic sur carte
+      cards.forEach(card => {
+        card.addEventListener('click', () => {
+          setActive(card.dataset.target);
+        });
+        // accessible au clavier : Enter ou Space
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setActive(card.dataset.target);
+          }
+        });
+      });
+
+      // Exemple : si vous voulez changer via code ailleurs
+      // window.setActiveMemberPanel = setActive;
+    })();
+  </script>
 </body>
 </html>

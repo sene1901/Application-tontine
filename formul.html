@@ -28,8 +28,13 @@ border-bottom-right-radius: 15%;/* arrondi en bas à gauche */
   .input-form::placeholder {
 color: #fff ;
   }
-    .color-titre {
+    .color-titre1 {
       color: #224957 !important;
+    }
+    .color-titre2{
+    color: #224957 !important;
+    font-size: 18px;
+  
     }
     .btn-custom {
       background-color: #1dd1a1;
@@ -63,17 +68,17 @@ color: #fff ;
   <div class="row login-container">
     
     <!-- Partie gauche (image)  -->
-    <div class="login-left col-md-5 d-none d-md-flex d-flex justify-content-center align-items-center">
+    <div class="login-left col-md-4 d-none d-md-flex d-flex justify-content-center align-items-center">
       <img src="Images/image1-removebg-preview__2_-removebg-preview (1).png" alt="Illustration" class="img-fluid">
     </div>
 
     <!-- Partie droite (formulaire) -->
-    <div class="login-right col-12 col-md-7 d-flex flex-column justify-content-center p-4">
-      <h1 class="text-center mb-5 color-titre display-5 fw-bold">
+    <div class="login-right col-12 col-md-8 d-flex flex-column justify-content-center p-4">
+      <h1 class="text-center mb-5 color-titre1 display-5 fw-bold">
         Bienvenue sur <b>Bakéli-tontine</b>
       </h1>
       <h2 class="text-center color-titre mb-5">Connectez-vous</h2>
-      <p class="text-center color-titre">Connectez-vous et gérez vos cotisations</p>
+      <p class="text-center color-titre2">Connectez-vous et gérez vos cotisations</p>
       
       <form id="loginForm" class="d-flex justify-content-center flex-column align-items-center ">
         <div class="mb-3 w-100 d-flex justify-content-center">
@@ -82,25 +87,22 @@ color: #fff ;
         <div class="mb-3 w-100 d-flex justify-content-center">
           <input type="password" class="form-control input-form" id="password" placeholder="Mot de passe">
         </div>
-        <div class="mb-3 text-center">
-          <a href="Passe-oublie.html" class="text-decoration-none text-dark">Mot de passe oublié ?</a>
+        <div class="mb-3 d-flex align-items-end">
+          <a href="Passe-oublie.html" class="text-decoration-none text-dark fw-bold">Mot de passe oublié ?</a>
         </div>
         <button type="submit" class="btn btn-custom">Connexion</button>
       </form>
 
       <div class="text-center mt-3">
-        <p class="color-titre">Vous n’avez pas de compte ? 
-          <a href="inscrip.html" class="fw-bold color-titre">Inscrivez-vous !</a>
+        <p class="color-titre2 ">Vous n’avez pas de compte ? 
+          <a href="Inscrip.html" class="fw-bold color-titre2 text-decoration-none ">Inscrivez-vous !</a>
         </p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- JavaScript validation -->
 <script src="formul.js"></script>
 
 </body>

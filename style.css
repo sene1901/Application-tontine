@@ -42,8 +42,8 @@
 
     /* Contenu principal */
     .content {
-      margin-left: 220px;
-       margin-top: 20px; 
+      margin-left: 250px;
+       /* margin-top: 20px;  */
       padding: 20px;
     }
     .carte{
@@ -113,3 +113,10 @@ background-color:#00c853;
     .progress-bar {
       background-color: #00c853 !important;
     }
+    .table1{
+      background-color: #00c853 ;
+    }
+     .pagination { margin: 0; }
+     
+     
+    

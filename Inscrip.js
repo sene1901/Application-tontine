@@ -1,4 +1,4 @@
- const form = document.getElementById("inscriptionForm");
+  const form = document.getElementById("inscriptionForm");
   const password = document.getElementById("password");
   const confirmPassword = document.getElementById("confirmPassword");
   const email = document.getElementById("email");

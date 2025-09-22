@@ -1,46 +1,67 @@
-  const form = document.getElementById("inscriptionForm");
-  const password = document.getElementById("password");
-  const confirmPassword = document.getElementById("confirmPassword");
-  const email = document.getElementById("email");
-  const telephone = document.getElementById("telephone");
-  const message = document.getElementById("message");
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
-  form.addEventListener("submit", function(event) {
-    event.preventDefault();
+  // Config Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyDObiwE5F61to8zeCeRFMmmjCqbUySdr6g",
+    authDomain: "projet-tontine-js.firebaseapp.com",
+    projectId: "projet-tontine-js",
+    storageBucket: "projet-tontine-js.appspot.com",
+    messagingSenderId: "187299151948",
+    appId: "1:187299151948:web:7c43d06cd9713482adb4e9"
+  };
 
-    // Regex pour validation
-    const emailRegex = /^[^ ]+@[^ ]+\.[a-z]{2,}$/i;
-    const phoneRegex = /^[0-9]{8,15}$/;
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+  // Init
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
-    // Vérification mot de passe
-    if (!passwordRegex.test(password.value)) {
-      message.innerHTML = `<div class="alert alert-danger">
-        ❌ Le mot de passe doit contenir au moins 8 caractères, 
-        avec une majuscule, une minuscule, un chiffre et un caractère spécial.
-      </div>`;
+  const inscrire = document.getElementById("submit");
+
+  inscrire.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    const nom = document.getElementById("nom").value;
+    const prenom = document.getElementById("prenom").value;
+    const dateNaissance = document.getElementById("dateNaissance").value;
+    const profession = document.getElementById("profession").value;
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    const email = document.getElementById("email").value;
+    const telephone = document.getElementById("telephone").value;
+    const adresse = document.getElementById("adresse").value;
+    const organisation = document.getElementById("organisation").value;
+
+    // Vérif mot de passe
+    if (password !== confirmPassword) {
+      alert("❌ Les mots de passe ne correspondent pas !");
       return;
     }
 
-    // Vérification confirmation
-    if (password.value !== confirmPassword.value) {
-      message.innerHTML = `<div class="alert alert-danger">❌ Les mots de passe ne correspondent pas.</div>`;
-      return;
-    }
+    try {
+      // Création compte Auth
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-    // Vérification email
-    if (!emailRegex.test(email.value)) {
-      message.innerHTML = `<div class="alert alert-danger">❌ Veuillez entrer un email valide.</div>`;
-      return;
-    }
+      // Sauvegarde infos dans Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        nom,
+        prenom,
+        dateNaissance,
+        profession,
+        telephone,
+        adresse,
+        organisation,
+        email,
+        createdAt: new Date()
+      });
 
-    // Vérification téléphone
-    if (!phoneRegex.test(telephone.value)) {
-      message.innerHTML = `<div class="alert alert-danger">❌ Le téléphone doit contenir uniquement des chiffres (8 à 15).</div>`;
-      return;
-    }
+      alert("✅ Inscription réussie !");
+      window.location.href = "connexion.html";
 
-    // Succès
-    message.innerHTML = `<div class="alert alert-success">✅ Inscription réussie !</div>`;
-    form.reset();
+    } catch (error) {
+      console.error(error);
+      alert("Erreur : " + error.message);
+    }
   });

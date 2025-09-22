@@ -1,11 +1,557 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tontine - Utilisateurs</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        /* Cartes */
+        .card-stats {
+            flex: 1;
+            min-width: 280px;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            background: #fff;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .card-stats.active {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        /* Bouton Ajouter */
+        .btn-ajouter {
+            background: #212529;
+            color: #fff;
+            border-radius: 8px;
+            padding: 8px 18px;
+            font-weight: 500;
+        }
+
+        .btn-ajouter:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        .statut-actif.style {
+
+            color: #28a745;
+        }
+
+        .statut-termine.style {
+            color: #28a745;
+        }
+
+        /* Tableau */
+        .table-responsive {
+            border-radius: 10px;
+        }
+
+        .statut-actif {
+            color: #28a745;
+        }
+
+        .table th {
+            background-color: #28a745 !important;
+            color: #060606;
+            padding: 20px !important;
+        }
+
+        .table td {
+            padding: 20px !important;
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle;
+            font-size: 0.95rem;
+        }
+
+        .progress {
+            height: 8px;
+        }
+
+        .progres {
+            height: 8px;
+            background-color: #eeebec;
+            width: 100%;
+            border-radius: 10px;
+            margin-right: 5%;
+        }
+
+        .Tdf {
+            display: flex;
+            flex-direction: row;
+            gap: 7;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rre {
+            display: flex;
+            flex-direction: row;
+            gap: 7;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .statut-actif {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .statut-bloque {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        .progress-barr {
+            background-color: #28a745;
+            width: 100%;
+            height: 8px;
+            border-radius: 10px;
+        }
+
+        .progress-barrr {
+            background-color: #030303;
+            width: 50%;
+            height: 8px;
+            border-radius: 10px;
+        }
+
+        .statut-termine {
+            color: #000;
+            font-weight: 600;
+        }
+    </style>
 </head>
+
 <body>
-    
+
+    <div class="container py-4">
+
+        <!-- Cartes -->
+        <div class="d-flex gap-4 mb-4">
+            <div class="card-stats active" data-table="actifs">
+                <p style="line-height:1;">
+                    Membres Actifs
+                    <i class="bi bi-dot"
+                        style="color:green; font-size:28px; vertical-align:middle; display:inline-block; margin-left:-10px;"></i>
+                </p>
+
+                <h3>94 Membres</h3>
+            </div>
+            <div class="card-stats" data-table="bloques">
+                <p>
+                    Membres Bloqués <i class="bi bi-slash-circle" style="color:red;"></i>
+                </p>
+
+                <h3>6 Membres</h3>
+            </div>
+            <div class="card-stats" data-table="tous">
+                <p>Total Effectif</p>
+                <h3>100 Membres</h3>
+            </div>
+        </div>
+
+        <!-- Bouton Ajouter -->
+        <div class="d-flex justify-content-end mb-3">
+            <button class="btn-ajouter" data-bs-toggle="modal" data-bs-target="#ajouterModal">Ajouter</button>
+        </div>
+
+        <!-- Tableau Actifs -->
+        <div class="table-responsive table-container" id="table-actifs">
+            <table class="table align-middle py-4">
+                <thead>
+                    <tr>
+                        <th>Membres</th>
+                        <th>Date début</th>
+                        <th>Seuil</th>
+                        <th>Progression</th>
+                        <th>Statut</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Gnilane</td>
+                        <td>01/01/2022</td>
+                        <td>300.000 FCFA</td>
+                        <td>
+                            <div class="Tdf">
+                                <div class="progres">
+                                    <div class="progress-barr"></div>
+                                </div>
+                                <span class="ddd">100%</span>
+                            </div>
+                        </td>
+                        <td class="statut-actif style">Terminé</td>
+                        <td>
+                            <div class="d-flex gap-3">
+                                <i class="bi bi-eye" style="font-size:18px; color:black;" title="Voir"></i>
+                                <i class="bi bi-pencil" style="font-size:18px; color:black;" title="Modifier"></i>
+                                <i class="bi bi-slash-circle" style="font-size:18px; color:black;" title="Bloquer"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Selena Roy</td>
+                        <td>01/01/2022</td>
+                        <td>300.000 FCFA</td>
+                        <td>
+                            <div class="rre">
+                                <div class="progres">
+                                    <div class="progress-barrr"></div>
+                                </div>
+                                <span class="ddd">57%</span>
+                            </div>
+                        </td>
+                        <td class="statut-actif">En cours</td>
+                        <td>
+                            <div class="d-flex gap-3">
+                                <i class="bi bi-eye" style="font-size:18px; color:black;" title="Voir"></i>
+                                <i class="bi bi-pencil" style="font-size:18px; color:black;" title="Modifier"></i>
+                                <i class="bi bi-slash-circle" style="font-size:18px; color:black;" title="Bloquer"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Emma Watson</td>
+                        <td>01/01/2022</td>
+                        <td>200.000 FCFA</td>
+                        <td>
+                            <div class="Tdf">
+                                <div class="progres">
+                                    <div class="progress-barr"></div>
+                                </div>
+                                <span class="ddd">100%</span>
+                            </div>
+                        </td>
+                        <td class="statut-actif style">Terminé</td>
+                        <td>
+                            <div class="d-flex gap-3">
+                                <i class="bi bi-eye" style="font-size:18px; color:black;" title="Voir"></i>
+                                <i class="bi bi-pencil" style="font-size:18px; color:black;" title="Modifier"></i>
+                                <i class="bi bi-slash-circle" style="font-size:18px; color:black;" title="Bloquer"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Anne Hathaway</td>
+                        <td>01/01/2022</td>
+                        <td>300.000 FCFA</td>
+                        <td>
+                            <div class="rre">
+                                <div class="progres">
+                                    <div class="progress-barrr"></div>
+                                </div>
+                                <span class="ddd">50%</span>
+                            </div>
+                        </td>
+                        <td class="statut-actif">En cours</td>
+                        <td>
+                            <div class="d-flex gap-3">
+                                <i class="bi bi-eye" style="font-size:18px; color:black;" title="Voir"></i>
+                                <i class="bi bi-pencil" style="font-size:18px; color:black;" title="Modifier"></i>
+                                <i class="bi bi-slash-circle" style="font-size:18px; color:black;" title="Bloquer"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Jhon Robert</td>
+                        <td>01/01/2022</td>
+                        <td>200.000 FCFA</td>
+                        <td>
+                            <div class="rre">
+                                <div class="progres">
+                                    <div class="progress-barrr"></div>
+                                </div>
+                                <span class="ddd">50%</span>
+                            </div>
+                        </td>
+                        <td class="statut-actif">En cours</td>
+                        <td>
+                            <div class="d-flex gap-3">
+                                <i class="bi bi-eye" style="font-size:18px; color:black;" title="Voir"></i>
+                                <i class="bi bi-pencil" style="font-size:18px; color:black;" title="Modifier"></i>
+                                <i class="bi bi-slash-circle" style="font-size:18px; color:black;" title="Bloquer"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Anne Hathaway</td>
+                        <td>01/01/2022</td>
+                        <td>300.000 FCFA</td>
+                        <td>
+                            <div class="rre">
+                                <div class="progres">
+                                    <div class="progress-barrr"></div>
+                                </div>
+                                <span class="ddd">64%</span>
+                            </div>
+                        </td>
+                        <td class="statut-actif">En cours</td>
+                        <td>
+                            <div class="d-flex gap-3">
+                                <i class="bi bi-eye" style="font-size:18px; color:black;" title="Voir"></i>
+                                <i class="bi bi-pencil" style="font-size:18px; color:black;" title="Modifier"></i>
+                                <i class="bi bi-slash-circle" style="font-size:18px; color:black;" title="Bloquer"></i>
+                            </div>
+                        </td>
+                    </tr>
+
+
+
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tableau Bloqués -->
+        <div class="table-responsive table-container d-none" id="table-bloques">
+            <table class="table align-middle ">
+                <thead>
+                    <tr>
+                        <th>Membres</th>
+                        <th>Date début</th>
+                        <th>Seuil</th>
+                        <th>Statut</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John Robert</td>
+                        <td>15/02/2022</td>
+                        <td>250.000 FCFA</td>
+                        <td class="statut-bloque text-danger">Bloqué</td>
+                        <td>
+                            <div class="d-flex gap-3">
+                                <i class="bi bi-eye" style="font-size:18px; color:black;" title="Voir"></i>
+                                <i class="bi bi-slash-circle" style="font-size:18px; color:red" title="Bloquer"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>John Robert</td>
+                        <td>15/02/2022</td>
+                        <td>250.000 FCFA</td>
+                        <td class="statut-bloque text-danger">Bloqué</td>
+                        <td>
+                            <div class="d-flex gap-3">
+                                <i class="bi bi-eye" style="font-size:18px; color:black;" title="Voir"></i>
+                                <i class="bi bi-slash-circle" style="font-size:18px; color:red" title="Bloquer"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>John Robert</td>
+                        <td>15/02/2022</td>
+                        <td>250.000 FCFA</td>
+                        <td class="statut-bloque text-danger">Bloqué</td>
+                        <td>
+                            <div class="d-flex gap-3">
+                                <i class="bi bi-eye" style="font-size:18px; color:black;" title="Voir"></i>
+                                <i class="bi bi-slash-circle" style="font-size:18px; color:red" title="Bloquer"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>John Robert</td>
+                        <td>15/02/2022</td>
+                        <td>250.000 FCFA</td>
+                        <td class="statut-bloque text-danger">Bloqué</td>
+                        <td>
+                            <div class="d-flex gap-3">
+                                <i class="bi bi-eye" style="font-size:18px; color:black;" title="Voir"></i>
+                                <i class="bi bi-slash-circle" style="font-size:18px; color:red" title="Bloquer"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>John Robert</td>
+                        <td>15/02/2022</td>
+                        <td>250.000 FCFA</td>
+                        <td class="statut-bloque text-danger">Bloqué</td>
+                        <td>
+                            <div class="d-flex gap-3">
+                                <i class="bi bi-eye" style="font-size:18px; color:black;" title="Voir"></i>
+                                <i class="bi bi-slash-circle" style="font-size:18px; color:red" title="Bloquer"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>John Robert</td>
+                        <td>15/02/2022</td>
+                        <td>250.000 FCFA</td>
+                        <td class="statut-bloque text-danger">Bloqué</td>
+                        <td>
+                            <div class="d-flex gap-3">
+                                <i class="bi bi-eye" style="font-size:18px; color:black;" title="Voir"></i>
+                                <i class="bi bi-slash-circle" style="font-size:18px;color:red" title="Bloquer"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>John Robert</td>
+                        <td>15/02/2022</td>
+                        <td>250.000 FCFA</td>
+                        <td class="statut-bloque text-danger">Bloqué</td>
+                        <td>
+                            <div class="d-flex gap-3">
+                                <i class="bi bi-eye" style="font-size:18px; color:black;" title="Voir"></i>
+                                <i class="bi bi-slash-circle" style="font-size:18px; color:red;" title="Bloquer"></i>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tableau Tous -->
+        <div class="table-responsive table-container d-none" id="table-tous">
+            <table class="table align-middle">
+                <thead>
+                    <tr class="mamy">
+                        <th>Membres</th>
+                        <th>Date début</th>
+                        <th>Seuil</th>
+                        <th>Progression</th>
+                        <th>Statut</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Selena Roy</td>
+                        <td>01/01/2022</td>
+                        <td>300.000 FCFA</td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" style="width:100%"></div>
+                            </div>
+                        </td>
+                        <td class="statut-termine style">actif</td>
+                        <td>
+                            <div class="d-flex gap-3">
+                                <i class="bi bi-eye" style="font-size:18px; color:black;" title="Voir"></i>
+                                <i class="bi bi-pencil" style="font-size:18px; color:black;" title="Modifier"></i>
+                                <i class="bi bi-slash-circle" style="font-size:18px; color:black;" title="Bloquer"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Emma Stone</td>
+                        <td>01/03/2022</td>
+                        <td>200.000 FCFA</td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" style="width:64%"></div>
+                            </div>
+                        </td>
+                        <td class="statut-actif text-danger">bloque</td>
+                        <td>
+                            <div class="d-flex gap-3">
+                                <i class="bi bi-eye" style="font-size:18px; color:black;" title="Voir"></i>
+                                <i class="bi bi-pencil" style="font-size:18px; color:black;" title="Modifier"></i>
+                                <i class="bi bi-slash-circle" style="font-size:18px; color:black;" title="Bloquer"></i>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <!-- Modal Ajouter -->
+<!-- Modal Ajouter -->
+<div class="modal fade" id="ajouterModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg"> <!-- modal-lg pour plus d’espace -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ajouter un membre</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Nom</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Prénom</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Date de naissance</label>
+                            <input type="date" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Profession</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">E-mail</label>
+                            <input type="email" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Téléphone</label>
+                            <input type="tel" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Adresse</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Organisation</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-success px-4">Ajouter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Switch tableau selon la carte
+        const cards = document.querySelectorAll('.card-stats');
+        const tables = document.querySelectorAll('.table-container');
+
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Activer la carte
+                cards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+
+                // Afficher le bon tableau
+                const tableId = card.getAttribute('data-table');
+                tables.forEach(t => t.classList.add('d-none'));
+                document.getElementById('table-' + tableId).classList.remove('d-none');
+            });
+        });
+    </script>
+
 </body>
+
 </html>

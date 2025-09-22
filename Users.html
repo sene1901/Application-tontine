@@ -137,6 +137,54 @@
             color: #000;
             font-weight: 600;
         }
+
+                /* Media queries pour écrans <= 768px (tablettes et mobiles) */
+@media (max-width: 768px) {
+
+    /* Cartes */
+    .d-flex.gap-4 {
+        flex-direction: column !important; /* Les cartes passent en colonne */
+    }
+    .card-stats {
+        width: 100% !important; /* Cartes pleine largeur */
+        margin-bottom: 15px;
+    }
+
+    /* Bouton Ajouter */
+    .d-flex.justify-content-end.mb-3 {
+        justify-content: center !important; /* Centrer le bouton sur mobile */
+        flex-wrap: wrap;
+    }
+
+    /* Tableau */
+    .table th,
+    .table td {
+        padding: 8px !important; /* Réduire l’espace pour mobile */
+        font-size: 0.75rem !important; /* Texte plus petit */
+    }
+
+    /* Progression */
+    .Tdf,
+    .rre {
+        flex-direction: column !important; /* Empiler barre et pourcentage */
+        align-items: flex-start !important;
+        gap: 3px;
+    }
+
+    /* Icônes actions */
+    .d-flex.gap-3 {
+        flex-wrap: wrap !important; /* Icônes sur plusieurs lignes si nécessaire */
+        gap: 5px !important;
+    }
+
+    /* Modal */
+    .modal-lg {
+        max-width: 95% !important; /* Modal plus petit sur mobile */
+    }
+}
+
+
+
     </style>
 </head>
 

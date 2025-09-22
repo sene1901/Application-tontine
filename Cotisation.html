@@ -1,11 +1,278 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Compact — Cotisations</title>
+
+<!-- Font (facultatif) -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --container-w:1100px;
+    --bg:#f1f2f3;
+    --card-bg:#fff;
+    --accent:#10d07a;
+    --card-padding:10px;
+    --card-title-size:13px;
+    --card-amount-size:15px;
+    --table-font-size:13px;
+    --menu-size:34px;
+    --radius:8px;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:"Poppins",system-ui,Arial;
+    background:var(--bg);
+    color:#222;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* Wrapper centré (position relative pour placer le bouton 3 points à l'intérieur) */
+  .page {
+    max-width:var(--container-w);
+    margin:50px auto;
+    padding:18px;
+    position:relative;
+    
+  }
+
+  /* Menu 3 points (placé en haut à droite du .page) */
+  .menu-btn {
+    position: absolute;
+    top: 4px;       /* plus en haut */
+    right: -70px;     /* plus à droite */
+    width: 80px;
+    height: 20px;
+    background: #848585;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    font-weight: 700;
+    color: #1b1b1b;
+}
+
+  .menu-btn:hover{ background:#dfe6e6; }
+
+  /* Cartes en ligne */
+  .cards {
+    display:flex;
+    gap:12px;
+    margin-bottom:14px;
+  }
+  .card {
+    flex: 1 1 0;
+    background:var(--card-bg);
+    border-radius:var(--radius);
+    padding:var(--card-padding);
+    box-shadow:0 2px 6px rgba(0,0,0,0.06);
+    min-height:64px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .card .label{
+    font-size:var(--card-title-size);
+    color:#3b4b50;
+    margin-bottom:6px;
+  }
+  .card .amount{
+    font-size:var(--card-amount-size);
+    font-weight:700;
+    color:#12343b;
+  }
+  .card .small{
+    font-size:11px;
+    color:#6a6a6a;
+    margin-top:6px;
+  }
+
+  /* PROGRESSION miniature */
+  .mini-progress{
+    margin-top:6px;
+    height:6px;
+    background:#ececec;
+    border-radius:6px;
+    overflow:hidden;
+  }
+  .mini-progress > i{
+    display:block;
+    height:100%;
+    background:var(--accent);
+    width:77%;
+  }
+
+  /* Tableau (plus compact) */
+  .table-box{
+    background:var(--card-bg);
+    border-radius:var(--radius);
+    box-shadow:0 4px 12px rgba(0,0,0,0.06);
+    overflow:hidden;
+    margin-top:12px;
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:var(--table-font-size);
+  }
+  thead th{
+    background:var(--accent);
+    color:#fff;
+    padding:10px 12px;
+    text-align:left;
+    font-weight:600;
+    letter-spacing:0.2px;
+  }
+  tbody td{
+    padding:9px 12px;
+    color:#333;
+    vertical-align:middle;
+    border-bottom:1px solid rgba(0,0,0,0.04);
+  }
+  tbody tr:nth-child(even){ background:#fafafa; }
+
+  /* Actions (œil) */
+  .actions {
+    text-align:center;
+    font-size:16px;
+    cursor:pointer;
+    color:#333;
+  }
+
+  /* Variante: tableau alternatif */
+  .hidden{ display:none; }
+
+  /* Responsive: cartes en colonne sur petits écrans */
+  @media (max-width:840px){
+    .cards{ flex-direction:column; }
+    .menu-btn{ top:8px; right:8px; }
+  }
+</style>
 </head>
 <body>
-    
+
+<div class="page">
+
+  <!-- Bouton 3 points (placé dans la page pour être aligné visuellement) -->
+  <div class="menu-btn" title="Basculer la vue" onclick="toggleTables()">⋯</div>
+
+  <!-- Cartes -->
+  <div class="cards" aria-hidden="false">
+    <div class="card">
+      <div class="label">Juin</div>
+      <div class="amount">225.000 FCFA</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Mai</div>
+      <div class="amount">100.000 FCFA</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Total Caisse</div>
+      <div class="amount">3.500.000 FCFA</div>
+      <div class="mini-progress"><i></i></div>
+      <div class="small">77% du seuil</div>
+    </div>
+  </div>
+
+  <!-- TABLEAU PRINCIPAL -->
+  <div class="table-box" id="table1">
+    <table>
+      <thead>
+        <tr>
+          <th>Membres</th>
+          <th>Date début</th>
+          <th>Montant cotisé</th>
+          <th>Montant restant</th>
+          <th style="width:72px;text-align:center;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Selena Roy</td>
+          <td>01/01/2022</td>
+          <td>200.000 FCFA</td>
+          <td>100.000 FCFA</td>
+          <td class="actions" title="Voir">👁️</td>
+        </tr>
+        <tr>
+          <td>Emma Watson</td>
+          <td>01/01/2022</td>
+          <td>200.000 FCFA</td>
+          <td>100.000 FCFA</td>
+          <td class="actions" title="Voir">👁️</td>
+        </tr>
+        <tr>
+          <td>Jhon Robert</td>
+          <td>01/01/2022</td>
+          <td>200.000 FCFA</td>
+          <td>100.000 FCFA</td>
+          <td class="actions" title="Voir">👁️</td>
+        </tr>
+        <tr>
+          <td>Anne Hathaway</td>
+          <td>01/01/2022</td>
+          <td>200.000 FCFA</td>
+          <td>100.000 FCFA</td>
+          <td class="actions" title="Voir">👁️</td>
+        </tr>
+        <tr>
+          <td>Ravi Shankar</td>
+          <td>01/01/2022</td>
+          <td>200.000 FCFA</td>
+          <td>100.000 FCFA</td>
+          <td class="actions" title="Voir">👁️</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TABLEAU ALTERNATIF (s'affiche quand on clique sur ⋯) -->
+  <div class="table-box hidden" id="table2" style="margin-top:12px;">
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Montant total</th>
+          <th>Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Selena Roy</td>
+          <td>300.000 FCFA</td>
+          <td>Payé</td>
+        </tr>
+        <tr>
+          <td>Emma Watson</td>
+          <td>250.000 FCFA</td>
+          <td>En attente</td>
+        </tr>
+        <tr>
+          <td>Jhon Robert</td>
+          <td>200.000 FCFA</td>
+          <td>Partiel</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+  // Basculer entre les deux tables (menu ⋯)
+  function toggleTables(){
+    document.getElementById('table1').classList.toggle('hidden');
+    document.getElementById('table2').classList.toggle('hidden');
+  }
+</script>
+
 </body>
 </html>

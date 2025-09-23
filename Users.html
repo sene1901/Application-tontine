@@ -11,15 +11,17 @@
 
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: Arial, sans-serif;
             background-color: #f8f9fa;
         }
 
+        
         /* Cartes */
         .card-stats {
             flex: 1;
-            min-width: 280px;
-            padding: 30px;
+            width:200px !important;
+             height: 120px;
+            padding: 20px;
             border-radius: 15px;
             text-align: center;
             background: #fff;
@@ -29,7 +31,7 @@
         }
 
         .card-stats.active {
-            background-color: #28a745 !important;
+            background-color: #00c853  !important;
             color: #fff;
         }
 
@@ -49,11 +51,11 @@
 
         .statut-actif.style {
 
-            color: #28a745;
+            color:#00c853 
         }
 
         .statut-termine.style {
-            color: #28a745;
+            color: #00c853 ;
         }
 
         /* Tableau */
@@ -62,17 +64,17 @@
         }
 
         .statut-actif {
-            color: #28a745;
+            color: #00c853 ;
         }
 
         .table th {
-            background-color: #28a745 !important;
+            background-color: #00c853 !important;
             color: #060606;
-            padding: 20px !important;
+            padding: 15px !important;
         }
 
         .table td {
-            padding: 20px !important;
+            padding: 15px !important;
         }
 
         .table th,
@@ -110,7 +112,7 @@
         }
 
         .statut-actif {
-            color: #28a745;
+            color: #00c853 ;
             font-weight: 600;
         }
 
@@ -120,7 +122,7 @@
         }
 
         .progress-barr {
-            background-color: #28a745;
+            background-color: #00c853 ;
             width: 100%;
             height: 8px;
             border-radius: 10px;
@@ -145,7 +147,7 @@
     <div class="content py-4">
 
         <!-- Cartes -->
-        <div class="d-flex gap-4 mb-4 py-5">
+        <div class="d-flex gap-4  py-5 justify-content-center flex-wrap mt-4 ">
             <div class="card-stats active" data-table="actifs">
                 <p style="line-height:1;">
                     Membres Actifs
@@ -153,7 +155,7 @@
                         style="color:green; font-size:28px; vertical-align:middle; display:inline-block; margin-left:-10px;"></i>
                 </p>
 
-                <h3>94 Membres</h3>
+                <h3 class="f-w">94 Membres</h3>
             </div>
             <div class="card-stats" data-table="bloques">
                 <p>
@@ -169,13 +171,13 @@
         </div>
 
         <!-- Bouton Ajouter -->
-        <div class="d-flex justify-content-end mb-3">
+        <div class="d-flex justify-content-end mb-4">
             <button class="btn-ajouter" data-bs-toggle="modal" data-bs-target="#ajouterModal">Ajouter</button>
         </div>
 
         <!-- Tableau Actifs -->
         <div class="table-responsive table-container" id="table-actifs">
-            <table class="table align-middle py-4">
+            <table class="table align-middle py-2">
                 <thead>
                     <tr>
                         <th>Membres</th>
@@ -488,7 +490,7 @@
             </div>
             <div class="modal-body">
                 <form>
-                    <div class="row g-3">
+                    <div class="row g-3 justify-content-center">
                         <div class="col-md-6">
                             <label class="form-label">Nom</label>
                             <input type="text" class="form-control" required>
@@ -533,24 +535,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Switch tableau selon la carte
-        const cards = document.querySelectorAll('.card-stats');
-        const tables = document.querySelectorAll('.table-container');
-
-        cards.forEach(card => {
-            card.addEventListener('click', () => {
-                // Activer la carte
-                cards.forEach(c => c.classList.remove('active'));
-                card.classList.add('active');
-
-                // Afficher le bon tableau
-                const tableId = card.getAttribute('data-table');
-                tables.forEach(t => t.classList.add('d-none'));
-                document.getElementById('table-' + tableId).classList.remove('d-none');
-            });
-        });
-    </script>
+    <script  src="user.js"> </script>
 
 </body>
 

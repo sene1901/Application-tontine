@@ -13,10 +13,10 @@
     --container-w:1100px;
     --bg:#f1f2f3;
     --card-bg:#fff;
-    --accent:#10d07a;
+    --accent:#00c853;
     --card-padding:10px;
     --card-title-size:13px;
-    --card-amount-size:15px;
+    --card-amount-size:20px;
     --table-font-size:13px;
     --menu-size:34px;
     --radius:8px;
@@ -25,7 +25,7 @@
   *{box-sizing:border-box}
   body{
     margin:0;
-    font-family:"Poppins",system-ui,Arial;
+    font-family: Arial, sans-serif;
     background:var(--bg);
     color:#222;
     -webkit-font-smoothing:antialiased;
@@ -37,14 +37,16 @@
     margin:50px auto;
     padding:18px;
     position:relative;
+      margin-left: 230px;
+      padding: 40px
     
   }
 
   /* Menu 3 points (placé en haut à droite du .page) */
   .menu-btn {
     position: absolute;
-    top: 4px;       /* plus en haut */
-    right: -70px;     /* plus à droite */
+    /* top: 4px;       plus en haut */
+    right: -20px;     /* plus à droite */
     width: 80px;
     height: 20px;
     background: #848585;
@@ -63,7 +65,7 @@
   /* Cartes en ligne */
   .cards {
     display:flex;
-    gap:12px;
+    gap:10px;
     margin-bottom:14px;
   }
   .card {
@@ -72,7 +74,8 @@
     border-radius:var(--radius);
     padding:var(--card-padding);
     box-shadow:0 2px 6px rgba(0,0,0,0.06);
-    min-height:64px;
+     width:200px !important;
+      height: 120px !important;
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -88,7 +91,6 @@
     color:#12343b;
   }
   .card .small{
-    font-size:11px;
     color:#6a6a6a;
     margin-top:6px;
   }
@@ -123,17 +125,19 @@
   }
   thead th{
     background:var(--accent);
-    color:#fff;
-    padding:10px 12px;
+    color:#161515;
+    padding:20px;
     text-align:left;
     font-weight:600;
     letter-spacing:0.2px;
+    font-size:  0.95rem
   }
   tbody td{
-    padding:9px 12px;
+    padding:20px 12px;
     color:#333;
     vertical-align:middle;
     border-bottom:1px solid rgba(0,0,0,0.04);
+    font-size:  0.95rem
   }
   tbody tr:nth-child(even){ background:#fafafa; }
 
@@ -157,13 +161,13 @@
 </head>
 <body>
 
-<div class="page">
+<div class="page ">
 
   <!-- Bouton 3 points (placé dans la page pour être aligné visuellement) -->
   <div class="menu-btn" title="Basculer la vue" onclick="toggleTables()">⋯</div>
 
   <!-- Cartes -->
-  <div class="cards" aria-hidden="false">
+  <div class="cards py-5" aria-hidden="false">
     <div class="card">
       <div class="label">Juin</div>
       <div class="amount">225.000 FCFA</div>

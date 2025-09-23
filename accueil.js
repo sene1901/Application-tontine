@@ -1,36 +1,114 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const links = document.querySelectorAll(".sidebar a, .accordion-body a");
   const content = document.getElementById("main-content");
+  const navbarTitle = document.querySelector(".navbar .navbar-brand");
+  const sidebarLinks = document.querySelectorAll('.sidebar a[data-page]');
+  const subLinks = document.querySelectorAll('.accordion-body a[data-page]');
 
-  function loadPage(page) {
+  // 👉 Fonction pour charger une page dans #main-content
+  function loadPage(page, title = "") {
     fetch(page)
       .then(res => res.text())
       .then(data => {
         content.innerHTML = data;
+        if (title) navbarTitle.textContent = title;
+
+        // ⚡ Charger dynamiquement le JS spécifique à la page (ex: user.js)
+        if (page === "Users.html") {
+          const script = document.createElement("script");
+          script.src = "user.js";
+          script.defer = true;
+          document.body.appendChild(script);
+        }
       })
       .catch(() => {
         content.innerHTML = "<p class='text-danger'>Erreur de chargement...</p>";
+        navbarTitle.textContent = "Erreur";
       });
   }
 
-  // Charger Dashboard par défaut
-  loadPage("dashboard.html");
+  // ✅ Charger Dashboard par défaut
+  loadPage("dashboard.html", "dashboard");
 
-  // Gestion des clics
-  links.forEach(link => {
+  // ✅ Sidebar (Dashboard, Utilisateurs, Cotisations)
+  sidebarLinks.forEach(link => {
     link.addEventListener("click", e => {
       e.preventDefault();
       const page = link.getAttribute("data-page");
+      const title = link.textContent.trim();
+      loadPage(page, title);
+    });
+  });
 
-      if (page) {
-        loadPage(page);
-
-        links.forEach(l => l.classList.remove("active"));
-        link.classList.add("active");
-      }
+  // ✅ Sous-menus (Paramètres, Archives…)
+  subLinks.forEach(link => {
+    link.addEventListener("click", e => {
+      e.preventDefault();
+      const page = link.getAttribute("data-page");
+      const title = link.textContent.trim();
+      loadPage(page, title);
     });
   });
 });
+
+
+
+ //  Graphique en ligne (évolution cotisations)
+    //  Graphique en ligne (évolution cotisations)
+    // const ctx1 = document.getElementById('lineChart');
+    // new Chart(ctx1, {
+    //   type: 'line',
+    //   data: {
+    //     labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet'],
+    //     datasets: [{
+    //       label: 'Cotisations (en milliers)',
+    //       data: [0, 40, 35, 38, 50, 40, 60],
+    //       borderColor: '#15cc95',
+    //       backgroundColor: 'rgba(34, 197, 94, 0.2)',
+    //       fill: true,
+    //       tension: 0.3
+    //     }]
+    //   },
+    //   options: {
+    //     responsive: true,
+    //     plugins: { legend: { display: false } },
+    //     scales: {
+    //       y: { beginAtZero: true }
+    //     }
+    //   }
+    // });
+
+    // //  Graphique Doughnut (statistiques)
+    // const ctx2 = document.getElementById('doughnutChart');
+    // new Chart(ctx2, {
+    //   type: 'doughnut',
+    //   data: {
+    //     labels: ['Terminé', 'En cours', 'Archivé', 'Bloqué'],
+    //     datasets: [{
+    //       data: [49.48, 23.62, 9.04, 18],
+    //       backgroundColor: ['#198754', '#0dcaf0', '#f87171', '#facc15']
+    //     }]
+    //   },
+    //   options: {
+    //     responsive: true,
+    //     plugins: {
+    //       legend: {
+    //         position: 'bottom'
+    //       }
+    //     }
+    //   }
+    // });
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Import Firebase depuis CDN
